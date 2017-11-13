@@ -82,6 +82,17 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
 
 
+    func showAlertWith(title: String, message: String, style: UIAlertControllerStyle = .alert) {
+
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: style)
+        let action = UIAlertAction(title: title, style: .default) { (action) in
+            self.dismiss(animated: true, completion: nil)
+        }
+        alertController.addAction(action)
+        self.present(alertController, animated: true, completion: nil)
+    }
+
+
     func fetchData(){
         let service = UserAPI()
         service.fetchUsers { (result) in
@@ -92,7 +103,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 self.tableView.reloadData()
             case .Error(let message):
                 DispatchQueue.main.async {
-                    //self.showAlertWith(title: "Error", message: message)
+                    self.showAlertWith(title: "Error", message: message)
                 }
             }
         }
